@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diagnostic Core</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            background-image: radial-gradient(#2d3748 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        .glass-card {
+            background: rgba(26, 32, 44, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .typewriter h1 {
+            overflow: hidden;
+            border-right: .15em solid #00f5d4;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .1em;
+            animation:
+                typing 3s steps(30, end),
+                blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00f5d4; }
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-gray-200 flex items-center justify-center min-h-screen p-4">
+
+    <div class="glass-card w-full max-w-2xl rounded-2xl p-8 shadow-2xl space-y-6 transition-all duration-500 transform hover:scale-105">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2 typewriter">
+            <h1 class="text-4xl font-bold text-white mx-auto">AI Diagnostic Core</h1>
+        </div>
+        <p class="text-center text-gray-400 -mt-2">Analyzing cellular structures with hybrid transformer intelligence.</p>
+
+        <!-- Main Content Area -->
+        <div id="content-area">
+            <!-- Upload Area -->
+            <div id="upload-area">
+                <label for="image-upload" id="drop-zone" class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-600 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors duration-300">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-10 h-10 mb-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/></svg>
+                        <p id="upload-prompt" class="mb-2 text-sm text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <img id="image-preview" src="" alt="Image preview" class="hidden max-h-48 rounded-lg mt-4"/>
+                    </div>
+                    <input id="image-upload" type="file" class="hidden" accept="image/*" />
+                </label>
+            </div>
+             <button id="analyze-button" class="w-full mt-6 bg-cyan-500 text-gray-900 font-bold py-3 px-4 rounded-lg hover:bg-cyan-400 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300 disabled:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50" disabled>
+                Begin Analysis
+            </button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="hidden flex flex-col items-center justify-center space-y-4 py-16">
+            <svg class="animate-spin h-12 w-12 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            <p class="text-lg text-cyan-300">Analyzing image...</p>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result-area" class="hidden text-center space-y-6">
+            <div id="prediction-box" class="p-6 rounded-lg">
+                <h2 id="prediction-text" class="text-3xl font-bold"></h2>
+            </div>
+            
+            <div class="space-y-4 text-left">
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-red-300">Confidence (Cancer)</span>
+                        <span id="cancer-confidence-text" class="text-sm font-medium text-red-300"></span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-4">
+                        <div id="cancer-progress-bar" class="bg-red-500 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-1">
+                        <span class="text-base font-medium text-green-300">Confidence (No Cancer)</span>
+                        <span id="no-cancer-confidence-text" class="text-sm font-medium text-green-300"></span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-4">
+                        <div id="no-cancer-progress-bar" class="bg-green-500 h-4 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="reset-button" class="w-full mt-6 bg-cyan-500 text-gray-900 font-bold py-3 px-4 rounded-lg hover:bg-cyan-400 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+                Analyze Another Sample
+            </button>
+        </div>
+
+         <!-- Error Message -->
+        <div id="error-message" class="hidden text-center bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg relative" role="alert">
+            <strong class="font-bold">Analysis Failed!</strong>
+            <span id="error-text" class="block sm:inline"></span>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-xs pt-4 border-t border-gray-700">
+            Developed by Pranav Asane | <a href="https://github.com/asanepranav/AI-Cancer-Detector-WebApp" target="_blank" class="hover:text-cyan-400">View on GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const analyzeButton = document.getElementById('analyze-button');
+        const contentArea = document.getElementById('content-area');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const resultArea = document.getElementById('result-area');
+        const predictionText = document.getElementById('prediction-text');
+        const predictionBox = document.getElementById('prediction-box');
+        const cancerConfidenceText = document.getElementById('cancer-confidence-text');
+        const cancerProgressBar = document.getElementById('cancer-progress-bar');
+        const noCancerConfidenceText = document.getElementById('no-cancer-confidence-text');
+        const noCancerProgressBar = document.getElementById('no-cancer-progress-bar');
+        const resetButton = document.getElementById('reset-button');
+        const errorMessage = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+        
+        let uploadedFile = null;
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('bg-gray-800'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('bg-gray-800'), false);
+        });
+
+        dropZone.addEventListener('drop', handleDrop, false);
+        imageUpload.addEventListener('change', handleFileSelect, false);
+
+        function handleDrop(e) {
+            handleFiles(e.dataTransfer.files);
+        }
+
+        function handleFileSelect(e) {
+            handleFiles(e.target.files);
+        }
+        
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    uploadedFile = file;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadPrompt.classList.add('hidden');
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        analyzeButton.disabled = false;
+                        analyzeButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                        hideError();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        analyzeButton.addEventListener('click', async () => {
+            if (!uploadedFile) return;
+
+            contentArea.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            hideError();
+            
+            const formData = new FormData();
+            formData.append('file', uploadedFile);
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                // --- ROBUST ERROR HANDLING ---
+                if (!response.ok) {
+                    // Try to get a specific error message from the server
+                    let serverError = 'An unknown server error occurred.';
+                    try {
+                        const errorData = await response.json();
+                        serverError = errorData.error || `Server responded with status ${response.status}`;
+                    } catch (e) {
+                        serverError = `Server responded with status ${response.status}`;
+                    }
+                    throw new Error(serverError);
+                }
+
+                const data = await response.json();
+                
+                // Check if the response has the expected structure
+                if (data.prediction && data.confidence) {
+                    displayResults(data);
+                } else {
+                    throw new Error('Invalid response format from server.');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showError(error.message || 'Could not connect to the AI server. Please ensure it is running and try again.');
+                resetToUpload();
+            }
+        });
+        
+        function displayResults(data) {
+            loadingSpinner.classList.add('hidden');
+            
+            const isCancer = data.prediction === 'Cancer';
+            predictionText.textContent = isCancer ? 'Cancer Detected' : 'No Cancer Detected';
+            predictionBox.className = isCancer ? 'p-6 rounded-lg bg-red-900 border border-red-700' : 'p-6 rounded-lg bg-green-900 border border-green-700';
+
+            const cancerConf = (data.confidence.cancer * 100);
+            const noCancerConf = (data.confidence.no_cancer * 100);
+
+            cancerConfidenceText.textContent = `${cancerConf.toFixed(2)}%`;
+            cancerProgressBar.style.width = `${cancerConf}%`;
+            
+            noCancerConfidenceText.textContent = `${noCancerConf.toFixed(2)}%`;
+            noCancerProgressBar.style.width = `${noCancerConf}%`;
+
+            resultArea.classList.remove('hidden');
+        }
+
+        resetButton.addEventListener('click', () => {
+            resultArea.classList.add('hidden');
+            resetToUpload();
+        });
+        
+        function resetToUpload() {
+            uploadedFile = null;
+            imageUpload.value = ''; // Clear file input
+            
+            loadingSpinner.classList.add('hidden');
+            
+            imagePreview.classList.add('hidden');
+            imagePreview.src = '';
+            uploadPrompt.classList.remove('hidden');
+            
+            analyzeButton.disabled = true;
+            analyzeButton.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            contentArea.classList.remove('hidden');
+        }
+
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function hideError() {
+            errorMessage.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
+

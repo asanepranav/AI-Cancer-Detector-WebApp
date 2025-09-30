@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* AI Diagnostic Core Theme - "Clarity from Complexity" */
+    --background: 210 50% 11%;  /* Deep charcoal/navy #1a202c */
+    --foreground: 210 20% 95%;  /* Soft white */
+
+    --card: 210 50% 11%;
+    --card-foreground: 210 20% 95%;
+
+    /* Frosted glass effect colors */
+    --glass: 210 40% 20% / 0.1;
+    --glass-border: 210 40% 30% / 0.2;
+
+    /* AI Accent - Glowing cyan/teal */
+    --primary: 174 100% 48%;     /* #00f5d4 */
+    --primary-foreground: 210 50% 11%;
+    --primary-glow: 174 100% 65%;
+
+    /* Secondary muted tones */
+    --secondary: 210 40% 20%;
+    --secondary-foreground: 210 20% 90%;
+
+    --muted: 210 40% 18%;
+    --muted-foreground: 210 20% 70%;
+
+    --accent: 174 100% 48%;
+    --accent-foreground: 210 50% 11%;
+
+    /* Medical status colors */
+    --destructive: 0 85% 60%;    /* Clinical red */
+    --destructive-foreground: 210 20% 95%;
+    
+    --success: 142 76% 45%;      /* Reassuring green */
+    --success-foreground: 210 20% 95%;
+
+    --border: 210 40% 25%;
+    --input: 210 40% 20%;
+    --ring: 174 100% 48%;
+
+    --radius: 1rem;
+
+    /* Neural network animation colors */
+    --neural-primary: 174 100% 48% / 0.6;
+    --neural-secondary: 174 100% 65% / 0.3;
+    --neural-pulse: 174 100% 80% / 0.8;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  /* Frosted Glass Effect */
+  .glass {
+    background: hsl(var(--glass));
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--glass-border));
+  }
+
+  /* Glow Effects */
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3);
+  }
+
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+  }
+
+  /* Neural Network Background */
+  .neural-bg {
+    background: linear-gradient(45deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--background)) 70%, 
+      hsl(var(--neural-secondary)) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .neural-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--neural-primary)) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, hsl(var(--neural-secondary)) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: neural-drift 20s linear infinite;
+    opacity: 0.6;
+  }
+
+  /* Scanner Circle Animations */
+  .scanner-pulse {
+    animation: scanner-pulse 3s ease-in-out infinite;
+  }
+
+  .scanner-rings {
+    animation: scanner-rings 2s ease-in-out infinite;
+  }
+
+  /* Progress Bar Animation */
+  .progress-fill {
+    transition: width 1s ease-in-out;
+  }
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+  100% { box-shadow: 0 0 30px hsl(var(--primary) / 0.8), 0 0 60px hsl(var(--primary) / 0.4); }
+}
+
+@keyframes neural-drift {
+  0% { transform: translateX(0) translateY(0); }
+  100% { transform: translateX(-50px) translateY(-50px); }
+}
+
+@keyframes scanner-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes scanner-rings {
+  0% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(1.2); 
+    opacity: 0.4; 
+  }
+  100% { 
+    transform: scale(1.5); 
+    opacity: 0; 
+  }
+}
