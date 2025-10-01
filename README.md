@@ -2,6 +2,9 @@ AI Powered histopathologic Cancer Detector WebApp:
 
 An advanced, end-to-end deep learning application for detecting metastatic cancer in histopathologic image patches. This project features a custom-built Hybrid Attention-CNN Transformer (HACT) model, served via a Flask backend, with a dynamic, custom-built frontend.
 
+<img width="1156" height="771" alt="image" src="https://github.com/user-attachments/assets/d0b06ac4-5ea4-4a26-aa95-ea2311a59f71" />
+
+
 🚀 Key Features
 Advanced AI Model: Utilizes a novel Hybrid Attention-CNN Transformer (HACT) architecture, combining the feature extraction power of EfficientNetV2 with the contextual understanding of a Transformer.
 
