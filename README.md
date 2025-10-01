@@ -1,100 +1,80 @@
-AI-Powered Histopathology Cancer Detection Web App
-This is a complete, end-to-end deep learning application for detecting metastatic cancer in histopathologic image patches. The project features a custom-built Hybrid Attention-CNN Transformer (HACT) model, a Flask backend API, and a dynamic, single-page web interface.
+AI Powered histopathologic Cancer Detector WebApp:
 
-Note: A live, deployed version of this application is available on Hugging Face Spaces!
-View Live Demo Here
+An advanced, end-to-end deep learning application for detecting metastatic cancer in histopathologic image patches. This project features a custom-built Hybrid Attention-CNN Transformer (HACT) model, served via a Flask backend, with a dynamic, custom-built frontend.
 
-![Alt Text](./my-app-screenshot.png)
+🚀 Key Features
+Advanced AI Model: Utilizes a novel Hybrid Attention-CNN Transformer (HACT) architecture, combining the feature extraction power of EfficientNetV2 with the contextual understanding of a Transformer.
 
-Key Features
-Unique AI Model: Implements a custom Hybrid Attention-CNN Transformer (HACT) architecture, combining the feature extraction power of EfficientNetV2 with the contextual understanding of a Transformer.
+Interactive Web Interface: A dynamic, user-friendly frontend built with HTML, Tailwind CSS, and vanilla JavaScript, allowing for easy image upload and analysis.
 
-Interactive Web Interface: A sleek, dark-mode frontend built with HTML, Tailwind CSS, and vanilla JavaScript allows users to easily upload an image and receive an instant prediction with dynamic feedback.
+Full End-to-End Pipeline: The project covers the complete machine learning lifecycle, from data exploration and model training in Kaggle notebooks to a fully deployed web application.
 
-RESTful API Backend: The model is served via a robust Flask and Gunicorn backend, making it scalable and easy to interact with.
+Containerized Deployment: The entire application is containerized using Docker, ensuring consistent and reliable deployment on platforms like Hugging Face Spaces.
 
-End-to-End Workflow: The repository includes the original Kaggle notebooks, showcasing the entire development process from data exploration and augmentation to model training and evaluation.
+🛠️ Project Structure
+.
+├── 📄 .gitignore
+├── 🐳 Dockerfile
+├── 🖼️ app-screenshot.png
+├── 🐍 flask_app.py
+├── 🌐 index.html
+├── 🔬 hact_model_epoch_10.pth
+├── 📋 README.md
+├── 📦 requirements.txt
+│
+└── 📁 kaggle-development/
+    ├── 📓 Main-Cancer-Detection-Trainer.ipynb
+    ├── 🐍 hact_model.py
+    ├── 🐍 pcam_data_utils.py
+    └── 🐍 training_utils.py
 
-Containerized for Deployment: The entire application is containerized using Docker, ensuring consistent and reliable deployment on platforms like Hugging Face Spaces.
-
-Project Structure
-├── kaggle-development/      # Jupyter notebooks and scripts for model development
-├── .gitignore               # Specifies files for Git to ignore
-├── Dockerfile               # Blueprint for building the deployment container
-├── flask_app.py             # The Flask backend server and API endpoint
-├── hact_model_epoch_10.pth  # The final trained model weights (tracked with Git LFS)
-├── index.html               # The single-page frontend application
-├── README.md                # Project documentation (this file)
-└── requirements.txt         # Python dependencies for the backend
-
-Technology Stack
-Backend: Python, Flask, Gunicorn
-
-AI / ML: PyTorch, Timm, Albumentations, Scikit-learn
-
-Frontend: HTML, Tailwind CSS, JavaScript
-
-Deployment: Docker, Hugging Face Spaces
-
-Development: Jupyter Notebooks, Pandas, NumPy
-
-Local Setup and Usage
-Follow these steps to run the application on your local machine.
+💻 Running Locally
+To run this application on your local machine, follow these steps.
 
 Step 1: Clone the Repository
+
 git clone [https://github.com/asanepranav/AI-Cancer-Detector-WebApp.git](https://github.com/asanepranav/AI-Cancer-Detector-WebApp.git)
 cd AI-Cancer-Detector-WebApp
 
-Step 2: Create and Activate a Conda Environment
-It is highly recommended to use a Conda environment to manage dependencies.
+Step 2: Set Up the Python Environment
 
-# Create the environment
+It is highly recommended to use a virtual environment.
+
+# Create and activate a Conda environment
 conda create -n cancer-app python=3.9 -y
-
-# Activate the environment
 conda activate cancer-app
 
-Step 3: Install Dependencies
-Install all the necessary Python libraries from the requirements file.
-
+# Install the necessary dependencies
 pip install -r requirements.txt
 
-Step 4: Run the Backend Server
-Start the Flask application using the recommended Flask command. This will launch the development server.
+Step 3: Run the Backend Server
 
+The backend is a Flask application that serves the AI model.
+
+# Run the Flask application
 flask --app flask_app run
 
-The server will be running at http://127.0.0.1:5000. Keep this terminal window open.
+The server will start and be available at http://127.0.0.1:5000.
 
-Step 5: Launch the Frontend
-Open the index.html file in your web browser to use the application. The frontend will automatically connect to your running local backend.
+Step 4: Launch the Frontend
 
-Deployment on Hugging Face Spaces
-This project is designed to be deployed as a Docker container on Hugging Face Spaces. Follow these steps to deploy your own version.
+Open the index.html file in your web browser to use the application.
 
-Step 1: Ensure Your GitHub Repository is Up-to-Date
-Before deploying, make sure you have pushed all the latest code (including the Dockerfile and requirements.txt) to your GitHub repository.
+🚀 Deployment on Hugging Face
+This application is deployed as a Docker Space on Hugging Face.
 
-Step 2: Create a New Space on Hugging Face
-Log in to your Hugging Face account. If you have an old, non-working Space, delete it from its "Settings" page to avoid confusion.
+Step 1: Create a New Space
 
-Click on your profile icon and select "New Space".
+Log in to Hugging Face and create a New Space.
 
-Fill in the details:
+Choose a Space name and License (e.g., MIT).
 
-Space name: Choose a name for your application.
+Select the Space SDK as Docker.
 
-License: Select MIT.
+Link it directly to your GitHub repository by pasting the URL in the "Clone from a GitHub repo" field.
 
-Select the Space SDK: This is the most important step. You must select "Docker".
+Choose the "CPU basic" hardware (free tier).
 
-Link to GitHub: After selecting Docker, a text box will appear. Paste the full URL of your GitHub repository here.
+Click "Create Space".
 
-Space hardware: The free "CPU basic" tier is sufficient.
-
-Click the "Create Space" button.
-
-Step 3: Monitor the Build
-Hugging Face will automatically clone your repository and start the build process using your Dockerfile. You can watch the progress in the "Logs" tab. The initial build may take 5-10 minutes.
-
-Once the status changes to "Running", your application will be live and accessible from the "App" tab.
+Hugging Face will automatically clone the repository, find the Dockerfile, and deploy the application.
